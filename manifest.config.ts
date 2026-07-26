@@ -6,11 +6,17 @@ export default defineManifest({
   name: pkg.name,
   version: pkg.version,
   icons: {
-    48: 'public/logo.png',
+    32: 'public/icons/logo32.png',
+    48: 'public/icons/logo48.png',
+    64: 'public/icons/logo64.png',
+    128: 'public/icons/logo128.png',
   },
   action: {
     default_icon: {
-      48: 'public/logo.png',
+      32: 'public/icons/logo32.png',
+      48: 'public/icons/logo48.png',
+      64: 'public/icons/logo64.png',
+      128: 'public/icons/logo128.png',
     },
     default_popup: 'src/popup/index.html',
   },
@@ -22,16 +28,32 @@ export default defineManifest({
     'activeTab',
     'storage',
     'cookies',
+    'webRequest',
+    'declarativeNetRequest',
   ],
   host_permissions: [
     'https://*.instagram.com/*',
     'https://*.cdninstagram.com/*',
     'https://*.fbcdn.net/*',
+    'https://*.tiktok.com/*',
+    'https://*.tiktokcdn.com/*',
+    'https://*.sentinela.my.id/*',
+    'https://n8n.jagoansatudata.com/*',
   ],
   content_scripts: [
     {
       js: ['src/content/main.tsx'],
       matches: ['https://*.instagram.com/*'],
+      run_at: 'document_idle',
+    },
+    {
+      js: ['src/content/tiktok.ts'],
+      matches: ['https://*.tiktok.com/*'],
+      run_at: 'document_idle',
+    },
+    {
+      js: ['src/content/sentinela-auth.ts'],
+      matches: ['https://sentinela.my.id/*', 'https://*.sentinela.my.id/*'],
       run_at: 'document_idle',
     },
   ],
